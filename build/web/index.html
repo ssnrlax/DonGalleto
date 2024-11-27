@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Don Galleto</title>
+        <link rel="stylesheet" href="style/ventas.css">
+        <!-- Enlace a Google Fonts para League Spartan -->
+        <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="header">
+            <img src="img/don_gallle-remove.png" alt="Logo Don Galleto" />
+            <h1>Don Galleto</h1>
+        </div>
+        <nav>
+            <button>Inicio</button>
+            <button>Inventario</button>
+            <button>Insumos</button>
+            <button>Reportes</button>
+        </nav>
+
+        <div class="content">
+            <div class="left-side">
+                <table id="productosTable">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Tipo</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productosBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="right-side">
+                <div class="product-buttons">
+                    <button id="productoX1">Producto X</button>
+                    <button id="productoX2">Producto X</button>
+                    <button id="productoX3">Producto X</button>
+                    <button id="productoX4">Producto X</button>
+                    <button id="productoX5">Producto X</button>
+                    <button id="productoX6">Producto X</button>
+                </div>
+
+                <div class="options">
+                    <select id="flavor">
+                        <option>Selecciona un sabor</option>
+                    </select>
+                    <select id="type">
+                        <option>Selecciona tipo de venta</option>
+                    </select>
+                    <input type="number" id="quantity" placeholder="Cantidad" min="1">
+                    <button id="add-button">Agregar</button>
+                </div>
+                <button id="buy-button">Comprar</button>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Total de la Venta</h2>
+                <p>Total: <span id="totalVenta">$0.00</span></p>
+                <label for="dineroRecibido">Dinero Recibido: </label>
+                <input type="number" id="dineroRecibido" placeholder="Introduce el dinero recibido">
+                <p>Cambio: <span id="cambio">$0.00</span></p>
+                <button id="confirmarCompra">Confirmar Compra</button>
+            </div>
+        </div>
+
+        <script src="script/ventas.js"></script>
+    </body>
+</html>

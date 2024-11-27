@@ -1,0 +1,267 @@
+body {
+    font-family: 'League Spartan', 'League Gothic';
+    background-color: #e1e1e1;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+
+.header {
+    background-color: #5B331E;
+    padding: 5px 15px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+}
+
+.header h1 {
+    color: white;
+    margin: 0;
+    font-size: 50px;
+}
+
+.header img {
+    height: 100px;
+    margin-right: 10px;
+}
+
+nav {
+    background-color: #a98e71;
+    padding: 7px 15px;
+}
+
+nav button {
+    background-color: #f5dc2d;
+    color: #5B331E;
+    border: none;
+    padding: 12px 25px;
+    margin: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    font-family: 'League Spartan';
+    transition: background-color 0.3s ease;
+}
+
+nav button:hover {
+    background-color: #D4B45D;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 40px 20px;
+    background-color: #ECECEC;
+    min-height: 100vh;
+}
+
+.left-side {
+    width: 50%;
+}
+
+.right-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+table {
+    width: 100%;  /* O el tamaño que desees para la tabla */
+    height: 60%;
+    border-collapse: collapse;
+    background-color: #FFF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Botones dentro de las celdas de la tabla */
+.table-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.table-buttons button {
+    background-color: #b36f04;
+    color: #FFF;
+    border: 2px solid transparent;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: 'League Spartan', sans-serif;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table-buttons button:hover {
+    background-color: #FFD700;
+    transform: scale(1.1);
+}
+
+input[type="number"] {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 1rem;
+    font-family: 'League Spartan', sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 12px 20px;
+    text-align: center;
+}
+
+th {
+    background-color: #F0E68C;
+    color: #5B331E;
+    font-size: 1.1rem;
+}
+
+td {
+    background-color: #fff;
+}
+
+.product-buttons,
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 30px; /* Esto asegura que los demás elementos estén a la derecha de la tabla */
+    justify-content: flex-start;
+}
+
+.product-buttons button,
+.options select,
+.options input,
+#add-button,
+#buy-button {
+    background-color: #b36f04;
+    color: #FFF;
+    border: 2px solid transparent;
+    padding: 15px 30px; /* Incremento del tamaño */
+    margin: 12px 8px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 22px; /* Texto más grande */
+    font-family: 'League Spartan';
+    transition: background-color 0.3s, transform 0.3s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+.product-buttons button:hover,
+#add-button:hover,
+#buy-button:hover {
+    transform: scale(1.05);
+}
+
+#add-button {
+    background-color: #FFD700;
+    color: #333;
+}
+
+#buy-button {
+    background-color: #FFD700;
+    color: black;
+    padding: 15px 30px;
+    margin-top: 30px;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    border-radius: 30px;
+}
+
+.product-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.options {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    justify-content: center;
+    width: 100%;
+}
+
+.options select,
+.options input {
+    background-color: #FFF;
+    color: #333;
+    border: 2px solid #ccc;
+    border-radius: 14px;
+    padding: 15px 25px;
+    font-size: 1.1rem; /* Tamaño de texto más grande */
+    width: 400px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    transition: border-color 0.3s ease;
+    text-align: left;
+}
+
+.options select:focus,
+.options input:focus {
+    border-color: #FFD700;
+    outline: none;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+select {
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+}
+``
