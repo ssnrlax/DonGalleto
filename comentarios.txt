@@ -1,0 +1,1 @@
+1. Hasta el momento, quisiera poder realizar un JSON como un ticket posterior a confirmar la compra.
