@@ -63,17 +63,30 @@
 
         <!-- Modal -->
         <div id="modal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Total de la Venta</h2>
-                <p>Total: <span id="totalVenta">$0.00</span></p>
-                <label for="dineroRecibido">Dinero Recibido: </label>
-                <input type="number" id="dineroRecibido" placeholder="Introduce el dinero recibido">
-                <p>Cambio: <span id="cambio">$0.00</span></p>
-                <button id="confirmarCompra">Confirmar Compra</button>
-            </div>
-        </div>
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Total de la Venta</h2>
+        <p>Total: <span id="totalVenta">$0.00</span></p>
+        <label for="descuento">Descuento:</label>
+        <select id="descuento">
+            <option value="0">Sin descuento</option>
+            <option value="5">5%</option>
+            <option value="10">10%</option>
+            <option value="15">15%</option>
+            <option value="20">20%</option>
+        </select>
+        <p>Dinero Recibido: <input type="number" id="dineroRecibido" placeholder="Ingresa el dinero recibido"></p>
+        <p>Cambio: <span id="cambio">$0.00</span></p>
+        <label>
+            <input type="checkbox" id="imprimirTicket"> Imprimir ticket
+        </label>
+        <button id="confirmarCompra">Confirmar Compra</button>
+    </div>
+</div>
+
 
         <script src="script/ventas.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     </body>
 </html>
