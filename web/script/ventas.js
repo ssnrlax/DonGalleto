@@ -66,7 +66,7 @@ function agregarAVenta() {
         return;
     }
 
-    const productosBody = document.getElementById("productosTable");
+    const productosBody = document.getElementById("productosTable").querySelector("tbody");
     const filas = productosBody.querySelectorAll("tr");
 
     // Verificar si el producto ya existe en la tabla
@@ -141,15 +141,7 @@ function agregarAVenta() {
     quantityInput.value = "";
 }
 
-// Cargar datos al iniciar la página
-document.addEventListener("DOMContentLoaded", () => {
-    cargarSabores();
-    cargarTiposVenta();
-
-    const addButton = document.getElementById("add-button");
-    addButton.addEventListener("click", agregarAVenta);
-});
-
+// Mostrar y confirmar compra
 document.addEventListener("DOMContentLoaded", () => {
     cargarSabores();
     cargarTiposVenta();
@@ -159,22 +151,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const modal = document.getElementById("modal");
     const spanClose = modal.querySelector(".close");
     const confirmarCompra = document.getElementById("confirmarCompra");
+    const dineroRecibidoInput = document.getElementById("dineroRecibido");
+    const cambioOutput = document.getElementById("cambio");
+    const totalVentaOutput = document.getElementById("totalVenta");
+    const descuentoSelect = document.getElementById("descuento");
+    const imprimirCheckbox = document.getElementById("imprimirTicket");
+
+    let totalVenta = 0;
 
     // Mostrar el modal al hacer clic en "Comprar"
     buyButton.addEventListener("click", () => {
         const productosBody = document.getElementById("productosTable").querySelector("tbody");
         const filas = productosBody.querySelectorAll("tr");
 
-        let total = 0;
+        totalVenta = 0;
 
         // Calcula el total sumando el precio de cada fila
         filas.forEach(fila => {
             const precio = parseFloat(fila.cells[3].textContent.replace("$", ""));
-            total += precio;
+            totalVenta += precio;
         });
 
         // Actualiza el total en el modal
-        document.getElementById("totalVenta").textContent = `$${total.toFixed(2)}`;
+        totalVentaOutput.textContent = `$${totalVenta.toFixed(2)}`;
+
+        // Limpia los valores del modal
+        dineroRecibidoInput.value = "";
+        cambioOutput.textContent = "$0.00";
+        descuentoSelect.value = "0"; // Sin descuento
+        imprimirCheckbox.checked = false;
 
         // Muestra el modal
         modal.style.display = "block";
@@ -191,18 +196,41 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // Actualizar el cambio en tiempo real y aplicar descuentos
+    function actualizarCambioYDescuento() {
+        const dineroRecibido = parseFloat(dineroRecibidoInput.value);
+        const descuento = parseFloat(descuentoSelect.value);
+        const totalConDescuento = totalVenta - (totalVenta * (descuento / 100));
+        
+        totalVentaOutput.textContent = `$${totalConDescuento.toFixed(2)}`;
+
+        if (!isNaN(dineroRecibido) && dineroRecibido >= totalConDescuento) {
+            const cambio = dineroRecibido - totalConDescuento;
+            cambioOutput.textContent = `$${cambio.toFixed(2)}`;
+        } else {
+            cambioOutput.textContent = "$0.00";
+        }
+    }
+
+    dineroRecibidoInput.addEventListener("input", actualizarCambioYDescuento);
+    descuentoSelect.addEventListener("change", actualizarCambioYDescuento);
+
     // Confirmar compra
     confirmarCompra.addEventListener("click", () => {
-        const dineroRecibido = parseFloat(document.getElementById("dineroRecibido").value);
-        const totalVenta = parseFloat(document.getElementById("totalVenta").textContent.replace("$", ""));
-        const cambio = dineroRecibido - totalVenta;
+        const dineroRecibido = parseFloat(dineroRecibidoInput.value);
+        const descuento = parseFloat(descuentoSelect.value);
+        const totalConDescuento = totalVenta - (totalVenta * (descuento / 100));
 
-        if (isNaN(dineroRecibido) || dineroRecibido < totalVenta) {
+        if (isNaN(dineroRecibido) || dineroRecibido < totalConDescuento) {
             alert("El dinero recibido no es suficiente.");
             return;
         }
 
-        document.getElementById("cambio").textContent = `$${cambio.toFixed(2)}`;
+        if (imprimirCheckbox.checked) {
+            generarPDF(dineroRecibido, totalConDescuento, descuento);
+        } else {
+            alert("No se imprimirá el ticket.");
+        }
 
         // Limpia la tabla y cierra el modal
         const productosBody = document.getElementById("productosTable").querySelector("tbody");
@@ -211,4 +239,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     addButton.addEventListener("click", agregarAVenta);
+
+    // Función para generar el PDF
+    function generarPDF(dineroRecibido, totalConDescuento, descuento) {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Agregar el contenido del ticket al PDF
+        doc.setFont("helvetica", "normal");
+        doc.text("Venta Realizada", 10, 10);
+        doc.text(`Total de la Venta: $${totalVenta.toFixed(2)}`, 10, 20);
+        doc.text(`Descuento Aplicado: ${descuento}%`, 10, 30);
+        doc.text(`Total con Descuento: $${totalConDescuento.toFixed(2)}`, 10, 40);
+        doc.text(`Dinero Recibido: $${dineroRecibido.toFixed(2)}`, 10, 50);
+        doc.text(`Cambio: $${(dineroRecibido - totalConDescuento).toFixed(2)}`, 10, 60);
+
+        // Generar el archivo PDF
+        doc.save("ticket_venta.pdf");
+    }
 });
+
