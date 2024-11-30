@@ -2,5 +2,3 @@ Ya quedó el modulo de ventas sin meterse con los modulos a desarrollar en un fu
 -Genera PDF con detalles de la venta
 -Calcula correctamente el descuento
 -Calcula total de la venta y cambio segun el dinero recibido
-
-!!! Solo faltaria implementar API de Marco !!!
