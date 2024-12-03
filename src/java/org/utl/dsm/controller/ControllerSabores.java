@@ -1,52 +1,44 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.utl.dsm.controller;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import org.utl.dsm.bd.ConexionMysql;
+import org.utl.dsm.cqrs.SaboresCQRS;
 import org.utl.dsm.model.Sabores;
+import org.utl.dsm.model.SaboresViewModel;
 
-/**
- *
- * @author snorl
- */
 public class ControllerSabores {
-    private ConexionMysql conexionMysql;
+
+    private SaboresCQRS saboresCQRS;
 
     public ControllerSabores() {
-        this.conexionMysql = new ConexionMysql();
+        this.saboresCQRS = new SaboresCQRS();
     }
 
-    private Connection getConnection() throws SQLException {
-        return conexionMysql.open();
-    }
-    // Método para consultar todos los sabores registrados
+    // Método para obtener todos los sabores de la base de datos
     public List<Sabores> obtenerSabores() {
-        List<Sabores> sabores = new ArrayList<>();
-        String sql = "SELECT * FROM sabores";  // Asumimos que la tabla se llama 'sabores'
+        return saboresCQRS.obtenerSabores();
+    }
 
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
+    // Método para obtener sabores desde una API externa
+    public List<SaboresViewModel> getAllSabores() {
+        try {
+            return saboresCQRS.getAllSabores();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al obtener los sabores desde la API externa: " + e.getMessage());
+        }
+    }
 
-            while (rs.next()) {
-                Sabores sabor = new Sabores();
-                sabor.setIdSabor(rs.getInt("idSabor"));  // Asumimos que el campo en la base de datos es 'idSabor'
-                sabor.setSabor(rs.getString("sabor"));  // Asumimos que el campo en la base de datos es 'sabor'
-
-                sabores.add(sabor);
-            }
+    // Método para actualizar la cantidad de un sabor con validación de existencia
+    public boolean actualizarCantidadSabor(int idSabor, int cantidad) {
+        try {
+            return saboresCQRS.actualizarCantidadSabor(idSabor, cantidad);
+        } catch (IllegalArgumentException e) {
+            System.err.println("Validación fallida: " + e.getMessage());
+            return false; // Regresar un valor para indicar el error al cliente
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Error al actualizar el sabor en la base de datos: " + e.getMessage());
         }
-        return sabores;
     }
-
 }

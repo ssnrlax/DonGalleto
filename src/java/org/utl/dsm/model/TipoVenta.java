@@ -12,6 +12,7 @@ public class TipoVenta {
     private int idTipoVenta; // AUTO_INCREMENT PRIMARY KEY
     private String tipo; // Ejemplo: Kilo, Medio, Individual, Paquete
     private double precio; // Precio base por cada tipo
+    private int galletas;
 
     public int getIdTipoVenta() {
         return idTipoVenta;
@@ -37,6 +38,14 @@ public class TipoVenta {
         this.precio = precio;
     }
 
+    public int getGalletas() {
+        return galletas;
+    }
+
+    public void setGalletas(int galletas) {
+        this.galletas = galletas;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -44,6 +53,7 @@ public class TipoVenta {
         sb.append("idTipoVenta=").append(idTipoVenta);
         sb.append(", tipo=").append(tipo);
         sb.append(", precio=").append(precio);
+        sb.append(", galletas=").append(galletas);
         sb.append('}');
         return sb.toString();
     }
